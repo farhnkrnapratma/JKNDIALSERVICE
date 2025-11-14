@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "JKN USSD Simulator",
+    "slug": "jkn-ussd-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jkn.ussdsimulator"
+    },
+    "android": {
+      "package": "com.jkn.ussdsimulator"
+    }
+  }
+}
