@@ -1,10 +1,10 @@
-# JKN DIAL SERVICE SIMULATOR
+# JKN Dial Service Prototype
 
 Aplikasi simulasi USSD JKN berbasis React Native (Expo Go) dan Node.js untuk testing dan development konsep USSD JKN Mobile.
 
 ## Disclaimer
 
-Ini adalah prototipe simulasi USSD yang berjalan melalui WiFi/HTTP, bukan USSD operator GSM resmi. Prototipe ini ditujukan untuk keperluan development, testing, dan demonstrasi konsep. Implementasi USSD production membutuhkan registrasi shortcode ke operator seluler, USSD Gateway, dan integrasi dengan API JKN resmi.
+Ini adalah prototipe simulasi USSD yang berjalan melalui HTTP, bukan USSD operator GSM resmi. Prototipe ini ditujukan untuk keperluan development, testing, dan demonstrasi konsep. Implementasi USSD production membutuhkan registrasi shortcode ke operator seluler, USSD Gateway, dan integrasi dengan API JKN resmi.
 
 ---
 
@@ -13,7 +13,7 @@ Ini adalah prototipe simulasi USSD yang berjalan melalui WiFi/HTTP, bukan USSD o
 ### Prerequisites
 
 - Node.js v16 atau lebih tinggi
-- npm atau yarn
+- npm
 - Expo Go app di smartphone (Android/iOS)
 - Komputer dan smartphone terhubung ke WiFi yang sama
 
@@ -54,7 +54,7 @@ ipconfig
 
 **Mac/Linux:**
 ```bash
-ifconfig
+ip route
 ```
 
 Catat IP address (contoh: `192.168.1.100`), kemudian setup mobile app:
