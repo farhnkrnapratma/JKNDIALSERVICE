@@ -7,13 +7,10 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Platform
 } from 'react-native';
 
-/**
- * USSD Popup Component
- * Mirip popup USSD asli GSM
- */
 const UssdPopup = ({ visible, type, message, onClose, onInput, loading }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -38,12 +35,10 @@ const UssdPopup = ({ visible, type, message, onClose, onInput, loading }) => {
     >
       <View style={styles.overlay}>
         <View style={styles.popup}>
-          {/* Header */}
           <View style={styles.header}>
             <Text style={styles.headerText}>USSD</Text>
           </View>
 
-          {/* Content */}
           <ScrollView style={styles.content}>
             {loading ? (
               <View style={styles.loadingContainer}>
@@ -55,7 +50,6 @@ const UssdPopup = ({ visible, type, message, onClose, onInput, loading }) => {
             )}
           </ScrollView>
 
-          {/* Input (only for CON type) */}
           {!loading && type === 'CON' && (
             <View style={styles.inputContainer}>
               <TextInput
@@ -71,7 +65,6 @@ const UssdPopup = ({ visible, type, message, onClose, onInput, loading }) => {
             </View>
           )}
 
-          {/* Buttons */}
           {!loading && (
             <View style={styles.buttonContainer}>
               {type === 'CON' ? (
@@ -138,8 +131,12 @@ const styles = StyleSheet.create({
   headerText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center'
+    fontWeight: '700',
+    textAlign: 'center',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   content: {
     padding: 20,
@@ -149,7 +146,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
     color: '#333',
-    fontFamily: 'monospace'
+    fontFamily: Platform.select({
+      ios: 'Menlo',
+      android: 'monospace'
+    })
   },
   loadingContainer: {
     alignItems: 'center',
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 10,
     fontSize: 14,
-    color: '#666'
+    color: '#666',
+    fontWeight: '500'
   },
   inputContainer: {
     paddingHorizontal: 20,
@@ -172,7 +173,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
-    backgroundColor: '#f9f9f9'
+    backgroundColor: '#f9f9f9',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -192,7 +197,11 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     color: '#666',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: '600',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   sendButton: {
     backgroundColor: '#009688'
@@ -200,7 +209,11 @@ const styles = StyleSheet.create({
   sendButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: '600',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   okButton: {
     backgroundColor: '#009688'
@@ -208,6 +221,11 @@ const styles = StyleSheet.create({
   okButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: '600',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    }),
     fontWeight: 'bold'
   }
 });

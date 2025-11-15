@@ -12,6 +12,22 @@ const prisma = require('../config/db');
 class UssdEngine {
   
   /**
+   * Validate NIK format (16 digits)
+   */
+  validateNIK(nik) {
+    if (!nik || typeof nik !== 'string') return false;
+    return /^\d{16}$/.test(nik.trim());
+  }
+
+  /**
+   * Validate phone number format (08xxx or 628xxx)
+   */
+  validatePhone(phone) {
+    if (!phone || typeof phone !== 'string') return false;
+    return /^(08|628)\d{8,11}$/.test(phone.trim());
+  }
+
+  /**
    * Process USSD request berdasarkan input user
    */
   async processRequest(sessionId, text, phoneNumber, serviceCode) {
@@ -97,11 +113,17 @@ class UssdEngine {
   async infoKepesertaan(inputs, phoneNumber) {
     if (inputs.length === 1) {
       return `CON Info Kepesertaan
-Masukkan NIK Anda:`;
+Masukkan NIK Anda (16 digit):`;
     }
 
     if (inputs.length === 2) {
       const nik = inputs[1];
+      
+      // Validate NIK format
+      if (!this.validateNIK(nik)) {
+        return 'END Format NIK tidak valid.\nNIK harus 16 digit angka.';
+      }
+
       const peserta = await prisma.peserta.findUnique({ where: { nik } });
 
       if (!peserta) {
@@ -131,6 +153,12 @@ Masukkan NIK Anda:`;
 
     if (inputs.length === 2) {
       const nik = inputs[1];
+      
+      // Validate NIK format
+      if (!this.validateNIK(nik)) {
+        return 'END Format NIK tidak valid.\nNIK harus 16 digit angka.';
+      }
+
       const peserta = await prisma.peserta.findUnique({ where: { nik } });
 
       if (!peserta) {
@@ -171,6 +199,12 @@ Masukkan NIK Anda:`;
 
     if (inputs.length === 2) {
       const nik = inputs[1];
+      
+      // Validate NIK format
+      if (!this.validateNIK(nik)) {
+        return 'END Format NIK tidak valid.\nNIK harus 16 digit angka.';
+      }
+
       const riwayat = await prisma.riwayat.findMany({
         where: { nik },
         orderBy: { tanggal: 'desc' },

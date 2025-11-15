@@ -1,14 +1,29 @@
+/**
+ * JKN DIAL SERVICE PROTOTYPE - Mobile Application
+ * 
+ * Copyright (c) 2025 Global Palvion. All Rights Reserved.
+ * 
+ * PROPRIETARY AND CONFIDENTIAL
+ * 
+ * This source code is the proprietary and confidential information of
+ * Global Palvion. Unauthorized copying, distribution, modification, or
+ * use of this software, via any medium, is strictly prohibited without
+ * the express written permission of Global Palvion.
+ * 
+ * For licensing inquiries: zainahmadfahrezi@gmail.com
+ */
+
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   StatusBar,
   TextInput,
   Alert,
   Platform
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Dialpad from './components/Dialpad';
 import UssdPopup from './components/UssdPopup';
 import {
@@ -16,16 +31,6 @@ import {
   sendUssdRequest,
   parseUssdResponse
 } from './services/ussdService';
-import { USSD_SERVICE_CODE } from './config';
-
-/**
- * JKN USSD Simulator App
- * 
- * ⚠️ CATATAN PENTING:
- * Ini adalah prototipe simulasi USSD yang berjalan melalui WiFi.
- * Dial *354# hanya memicu request ke server backend internal.
- * Untuk implementasi USSD resmi, kode harus didaftarkan ke operator seluler.
- */
 
 export default function App() {
   const [dialInput, setDialInput] = useState('');
@@ -37,7 +42,6 @@ export default function App() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Generate session ID saat app dibuka
     setSessionId(generateSessionId());
   }, []);
 
@@ -55,19 +59,16 @@ export default function App() {
       return;
     }
 
-    // Check if it's a USSD code
-    if (!dialInput.includes('*') && !dialInput.includes('#')) {
+    if (!dialInput.includes('*') || !dialInput.includes('#')) {
       Alert.alert('Info', 'Ini adalah simulasi USSD. Gunakan kode seperti *354#');
       return;
     }
 
-    // Start new USSD session
     const newSessionId = generateSessionId();
     setSessionId(newSessionId);
     setUssdText('');
     setDialInput('');
 
-    // Show loading popup
     setPopupVisible(true);
     setLoading(true);
     setPopupMessage('Menghubungi JKN...');
@@ -80,7 +81,6 @@ export default function App() {
       setPopupType(parsed.type);
       setPopupMessage(parsed.message);
       setUssdText('');
-
     } catch (error) {
       setLoading(false);
       setPopupVisible(false);
@@ -106,7 +106,6 @@ export default function App() {
       setPopupType(parsed.type);
       setPopupMessage(parsed.message);
 
-      // If END, reset session
       if (parsed.type === 'END') {
         setTimeout(() => {
           setUssdText('');
@@ -123,7 +122,6 @@ export default function App() {
   const handleClosePopup = () => {
     setPopupVisible(false);
     setUssdText('');
-    // Generate new session for next call
     setSessionId(generateSessionId());
   };
 
@@ -131,34 +129,22 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>🏥 JKN USSD Simulator</Text>
+        <Text style={styles.headerTitle}>JKN Dial Service Prototype</Text>
         <Text style={styles.headerSubtitle}>
-          ⚠️ Prototipe Simulasi - Bukan USSD Operator Sesungguhnya
+          Bukan USSD Operator Sesungguhnya
         </Text>
       </View>
 
-      {/* Display Input */}
       <View style={styles.displayContainer}>
         <TextInput
           style={styles.display}
           value={dialInput}
           editable={false}
-          placeholder="Ketik *354# lalu Call"
           placeholderTextColor="#999"
         />
       </View>
 
-      {/* Info */}
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>📱 Dial: *354#</Text>
-        <Text style={styles.infoSmall}>
-          Simulasi via WiFi • Backend harus running
-        </Text>
-      </View>
-
-      {/* Dialpad */}
       <View style={styles.dialpadContainer}>
         <Dialpad
           onPress={handleDialpadPress}
@@ -167,7 +153,6 @@ export default function App() {
         />
       </View>
 
-      {/* USSD Popup */}
       <UssdPopup
         visible={popupVisible}
         type={popupType}
@@ -176,13 +161,6 @@ export default function App() {
         onClose={handleClosePopup}
         onInput={handleUssdInput}
       />
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          JKN Dial Service Simulator v1.0
-        </Text>
-      </View>
     </SafeAreaView>
   );
 }
@@ -200,14 +178,19 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '700',
     color: '#fff',
-    marginBottom: 5
+    marginBottom: 5,
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   headerSubtitle: {
     fontSize: 12,
     color: '#e0f2f1',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontWeight: '400'
   },
   displayContainer: {
     paddingHorizontal: 20,
@@ -215,40 +198,21 @@ const styles = StyleSheet.create({
   },
   display: {
     fontSize: 32,
-    fontWeight: '300',
+    fontWeight: '400',
     textAlign: 'center',
     padding: 15,
     borderBottomWidth: 2,
     borderBottomColor: '#009688',
-    color: '#333'
-  },
-  infoContainer: {
-    alignItems: 'center',
-    paddingVertical: 10
-  },
-  infoText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#009688',
-    marginBottom: 5
-  },
-  infoSmall: {
-    fontSize: 12,
-    color: '#666'
+    color: '#333',
+    letterSpacing: 1,
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   dialpadContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  footer: {
-    padding: 15,
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0'
-  },
-  footerText: {
-    fontSize: 12,
-    color: '#999'
   }
 });

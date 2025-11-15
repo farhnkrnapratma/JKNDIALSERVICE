@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "JKN USSD Simulator",
-    "slug": "jkn-ussd-mobile",
+    "name": "JKN Dial Service Prototype",
+    "slug": "jkn-dial-service",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
@@ -11,10 +11,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jkn.ussdsimulator"
+      "bundleIdentifier": "com.jkn.dialservice"
     },
     "android": {
-      "package": "com.jkn.ussdsimulator"
+      "package": "com.jkn.dialservice"
     }
   }
 }

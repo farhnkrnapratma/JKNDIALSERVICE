@@ -11,7 +11,7 @@ const options = {
 
 Backend API untuk simulasi USSD JKN Mobile.
 
-## ⚠️ PENTING - Prototipe Simulasi
+## PENTING - Prototipe Simulasi
 
 Ini adalah **prototipe simulasi USSD** yang berjalan melalui WiFi/HTTP.
 - Dial *354# hanya memicu request ke server backend internal
@@ -20,16 +20,16 @@ Ini adalah **prototipe simulasi USSD** yang berjalan melalui WiFi/HTTP.
 
 ## Fitur
 
-- ✅ Info Kepesertaan
-- ✅ Tagihan & Iuran  
-- ✅ Riwayat Pelayanan
-- ✅ Info Faskes
-- ✅ Perubahan Data
-- ✅ Pengaduan
-- ✅ SOS
-- ✅ Daftar Peserta Baru
-- ✅ Antrian Faskes
-- ✅ Konsultasi
+- Info Kepesertaan
+- Tagihan & Iuran  
+- Riwayat Pelayanan
+- Info Faskes
+- Perubahan Data
+- Pengaduan
+- SOS
+- Daftar Peserta Baru
+- Antrian Faskes
+- Konsultasi
 
 ## Tech Stack
 

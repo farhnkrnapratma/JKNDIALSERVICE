@@ -10,7 +10,7 @@ const prisma = require('../config/db');
 router.get('/data/peserta', async (req, res) => {
   try {
     const peserta = await prisma.peserta.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { nama: 'asc' }
     });
     res.json(peserta);
   } catch (error) {
@@ -22,7 +22,7 @@ router.get('/data/peserta', async (req, res) => {
 router.get('/data/tagihan', async (req, res) => {
   try {
     const tagihan = await prisma.tagihan.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { id: 'desc' }
     });
     res.json(tagihan);
   } catch (error) {
@@ -34,7 +34,7 @@ router.get('/data/tagihan', async (req, res) => {
 router.get('/data/riwayat', async (req, res) => {
   try {
     const riwayat = await prisma.riwayat.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { tanggal: 'desc' }
     });
     res.json(riwayat);
   } catch (error) {

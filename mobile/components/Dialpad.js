@@ -1,10 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
-/**
- * Dialpad Component
- * Tombol 0-9, *, #, backspace, call
- */
 const Dialpad = ({ onPress, onCall, onBackspace }) => {
   const buttons = [
     ['1', '2', '3'],
@@ -15,7 +12,6 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
 
   return (
     <View style={styles.container}>
-      {/* Number Buttons */}
       {buttons.map((row, rowIndex) => (
         <View key={rowIndex} style={styles.row}>
           {row.map((button) => (
@@ -31,7 +27,6 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
         </View>
       ))}
 
-      {/* Action Buttons */}
       <View style={styles.row}>
         <TouchableOpacity
           style={[styles.button, styles.emptyButton]}
@@ -45,7 +40,7 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
           onPress={onCall}
           activeOpacity={0.7}
         >
-          <Text style={styles.callButtonText}>📞 CALL</Text>
+          <MaterialIcons name="call" size={32} color="#fff" />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -53,7 +48,7 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
           onPress={onBackspace}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>⌫</Text>
+          <MaterialIcons name="backspace" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
@@ -87,15 +82,14 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 28,
     fontWeight: '400',
-    color: '#333'
+    color: '#333',
+    fontFamily: Platform.select({
+      ios: 'System',
+      android: 'Roboto'
+    })
   },
   callButton: {
     backgroundColor: '#4CAF50'
-  },
-  callButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#fff'
   },
   backspaceButton: {
     backgroundColor: '#FF6B6B'

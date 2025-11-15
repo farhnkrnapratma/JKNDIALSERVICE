@@ -206,7 +206,7 @@ async function main() {
     await prisma.antrian.create({ data });
   }
 
-  console.log('✅ Database seeded successfully!');
+  console.log('Database seeded successfully!');
 }
 
 main()

@@ -1,25 +1,10 @@
 import axios from 'axios';
 import { API_CONFIG } from '../config';
 
-/**
- * USSD Service
- * Handle komunikasi dengan backend USSD
- */
-
-/**
- * Generate unique session ID
- */
 export const generateSessionId = () => {
   return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 };
 
-/**
- * Send USSD request to backend
- * @param {string} sessionId - Unique session identifier
- * @param {string} text - User input text
- * @param {string} phoneNumber - User phone number (optional)
- * @param {string} serviceCode - USSD service code (default: *354#)
- */
 export const sendUssdRequest = async (sessionId, text, phoneNumber = '', serviceCode = '*354#') => {
   try {
     const response = await axios.post(
@@ -52,11 +37,6 @@ export const sendUssdRequest = async (sessionId, text, phoneNumber = '', service
   }
 };
 
-/**
- * Parse USSD response
- * @param {string} response - Response from backend
- * @returns {object} Parsed response with type (CON/END) and message
- */
 export const parseUssdResponse = (response) => {
   if (!response) {
     return { type: 'END', message: 'No response from server' };
