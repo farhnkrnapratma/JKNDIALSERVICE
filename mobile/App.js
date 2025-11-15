@@ -1,5 +1,5 @@
 /**
- * JKN DIAL SERVICE SIMULATOR - Mobile Application
+ * JKN DIAL SERVICE PROTOTYPE - Mobile Application
  * 
  * Copyright (c) 2025 Global Palvion. All Rights Reserved.
  * 
@@ -18,12 +18,12 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   StatusBar,
   TextInput,
   Alert,
   Platform
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Dialpad from './components/Dialpad';
 import UssdPopup from './components/UssdPopup';
 import {
@@ -31,7 +31,6 @@ import {
   sendUssdRequest,
   parseUssdResponse
 } from './services/ussdService';
-import { USSD_SERVICE_CODE } from './config';
 
 export default function App() {
   const [dialInput, setDialInput] = useState('');
@@ -60,7 +59,7 @@ export default function App() {
       return;
     }
 
-    if (!dialInput.includes('*') && !dialInput.includes('#')) {
+    if (!dialInput.includes('*') || !dialInput.includes('#')) {
       Alert.alert('Info', 'Ini adalah simulasi USSD. Gunakan kode seperti *354#');
       return;
     }
@@ -131,9 +130,9 @@ export default function App() {
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>JKN USSD Simulator</Text>
+        <Text style={styles.headerTitle}>JKN Dial Service Prototype</Text>
         <Text style={styles.headerSubtitle}>
-          Prototipe Simulasi - Bukan USSD Operator Sesungguhnya
+          Bukan USSD Operator Sesungguhnya
         </Text>
       </View>
 
@@ -142,16 +141,8 @@ export default function App() {
           style={styles.display}
           value={dialInput}
           editable={false}
-          placeholder="Ketik *354# lalu Call"
           placeholderTextColor="#999"
         />
-      </View>
-
-      <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>Dial: *354#</Text>
-        <Text style={styles.infoSmall}>
-          Simulasi via WiFi - Backend harus running
-        </Text>
       </View>
 
       <View style={styles.dialpadContainer}>
@@ -170,12 +161,6 @@ export default function App() {
         onClose={handleClosePopup}
         onInput={handleUssdInput}
       />
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>
-          JKN Dial Service Simulator v1.0
-        </Text>
-      </View>
     </SafeAreaView>
   );
 }
@@ -225,39 +210,9 @@ const styles = StyleSheet.create({
       android: 'Roboto'
     })
   },
-  infoContainer: {
-    alignItems: 'center',
-    paddingVertical: 10
-  },
-  infoText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#009688',
-    marginBottom: 5,
-    fontFamily: Platform.select({
-      ios: 'System',
-      android: 'Roboto'
-    })
-  },
-  infoSmall: {
-    fontSize: 12,
-    color: '#666',
-    fontWeight: '400'
-  },
   dialpadContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  footer: {
-    padding: 15,
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0'
-  },
-  footerText: {
-    fontSize: 12,
-    color: '#999',
-    fontWeight: '400'
   }
 });

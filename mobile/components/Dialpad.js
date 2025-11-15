@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Dialpad = ({ onPress, onCall, onBackspace }) => {
   const buttons = [
@@ -39,7 +40,7 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
           onPress={onCall}
           activeOpacity={0.7}
         >
-          <Text style={styles.callButtonText}>CALL</Text>
+          <MaterialIcons name="call" size={32} color="#fff" />
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -47,7 +48,7 @@ const Dialpad = ({ onPress, onCall, onBackspace }) => {
           onPress={onBackspace}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>⌫</Text>
+          <MaterialIcons name="backspace" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
@@ -89,15 +90,6 @@ const styles = StyleSheet.create({
   },
   callButton: {
     backgroundColor: '#4CAF50'
-  },
-  callButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#fff',
-    fontFamily: Platform.select({
-      ios: 'System',
-      android: 'Roboto'
-    })
   },
   backspaceButton: {
     backgroundColor: '#FF6B6B'
