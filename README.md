@@ -8,6 +8,21 @@ Ini adalah prototipe simulasi USSD yang berjalan melalui HTTP, bukan USSD operat
 
 ---
 
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Fitur](#fitur)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [Database Schema](#database-schema)
+- [Test Data](#test-data)
+- [API Documentation](#api-documentation)
+- [Development Guide](#development-guide)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
+
+---
+
 ## Quick Start
 
 ### Prerequisites
@@ -17,7 +32,57 @@ Ini adalah prototipe simulasi USSD yang berjalan melalui HTTP, bukan USSD operat
 - Expo Go app di smartphone (Android/iOS)
 - Komputer dan smartphone terhubung ke WiFi yang sama
 
-### Backend Setup
+### Automated Setup (Recommended)
+
+Skrip automasi akan otomatis mendeteksi IP lokal, mengkonfigurasi aplikasi, dan menjalankan backend + mobile sekaligus.
+
+**Linux/Mac:**
+```bash
+./start-dev.sh
+```
+
+**Windows PowerShell:**
+```powershell
+.\start-dev.ps1
+```
+
+**Skrip akan:**
+1. Mendeteksi IP lokal otomatis
+2. Mengupdate `mobile/config.js` dengan IP yang terdeteksi
+3. Menginstall dependencies (jika belum)
+4. Setup database Prisma (jika belum)
+5. Menjalankan backend dan mobile development server
+
+**Setelah QR code muncul:**
+1. Buka Expo Go app di smartphone
+2. Scan QR code
+3. Tunggu app terbuka
+4. Ketik `*354#` dan tekan CALL
+
+**Catatan:** Tekan `Ctrl+C` untuk menghentikan semua services. Konfigurasi akan otomatis dikembalikan ke default.
+
+### Test Your Setup
+
+Verifikasi bahwa semua sudah terkonfigurasi dengan benar:
+
+```bash
+./test-setup.sh
+```
+
+Script akan mengecek:
+- Node.js dan npm installation
+- Backend dan mobile dependencies
+- Database setup
+- IP detection
+- Backend server responsiveness
+
+---
+
+### Manual Setup
+
+Jika Anda ingin setup secara manual:
+
+#### Backend Setup
 
 ```bash
 cd backend
@@ -43,7 +108,7 @@ PORT=3000
 NODE_ENV=development
 ```
 
-### Mobile App Setup
+#### Mobile App Setup
 
 Cari IP komputer Anda terlebih dahulu:
 
@@ -117,28 +182,33 @@ Aplikasi menyediakan 10 menu USSD:
 
 ```
 JKNDIALSERVICE/
-├── backend/
-│   ├── prisma/
-│   │   ├── schema.prisma       # Database schema (10 models)
-│   │   ├── seed.js             # Database seeder
-│   │   └── migrations/         # Database migrations
-│   ├── src/
-│   │   ├── config/             # Database and Swagger configuration
-│   │   ├── controllers/        # Request handlers
-│   │   ├── routes/             # API routes
-│   │   ├── services/           # Business logic (USSD engine)
-│   │   ├── shoot/              # Troubleshooting utilities
-│   │   └── index.js            # Application entry point
-│   └── package.json
-│
-└── mobile/
-    ├── components/
-    │   ├── Dialpad.js          # Telephone dialpad UI
-    │   └── UssdPopup.js        # USSD modal popup
-    ├── services/
-    │   └── ussdService.js      # API communication layer
-    ├── App.js                  # Main application component
-    └── config.js               # Backend URL configuration
+  backend/
+    prisma/
+      schema.prisma       # Database schema (10 models)
+      seed.js             # Database seeder
+      migrations/         # Database migrations
+    src/
+      config/             # Database and Swagger configuration
+      controllers/        # Request handlers
+      routes/             # API routes
+      services/           # Business logic (USSD engine)
+      shoot/              # Troubleshooting utilities
+      index.js            # Application entry point
+    package.json
+
+  mobile/
+    components/
+      Dialpad.js          # Telephone dialpad UI
+      UssdPopup.js        # USSD modal popup
+    services/
+      ussdService.js      # API communication layer
+    App.js                # Main application component
+    config.js             # Backend URL configuration
+
+  start-dev.sh            # Linux/Mac automation script
+  start-dev.ps1           # Windows PowerShell script
+  test-setup.sh           # Environment test script
+  README.md               # This file
 ```
 
 ---
@@ -180,9 +250,11 @@ Database telah di-seed dengan data dummy untuk testing:
 
 ---
 
-## API Examples
+## API Documentation
 
-### 1. Main Menu
+### API Examples
+
+#### 1. Main Menu
 
 Request menu utama USSD:
 
@@ -205,7 +277,7 @@ Response:
 }
 ```
 
-### 2. Info Kepesertaan
+#### 2. Info Kepesertaan
 
 Request info kepesertaan dengan NIK:
 
@@ -228,7 +300,7 @@ Response:
 }
 ```
 
-### 3. Tagihan & Iuran
+#### 3. Tagihan & Iuran
 
 ```bash
 curl -X POST http://localhost:3000/api/ussd \
@@ -249,29 +321,6 @@ Response:
 }
 ```
 
-### 4. Daftar Peserta Baru
-
-Request pendaftaran peserta baru (full flow):
-
-```bash
-curl -X POST http://localhost:3000/api/ussd \
-  -H "Content-Type: application/json" \
-  -d '{
-    "sessionId": "session_007",
-    "serviceCode": "*354#",
-    "phoneNumber": "081234567890",
-    "text": "8*3201234567890999*3201012345678999*John Doe*Bogor*1"
-  }'
-```
-
-Response:
-```json
-{
-  "sessionId": "session_007",
-  "response": "END Prapendaftaran berhasil!\nNIK: 3201234567890999\nNama: John Doe\n\nLengkapi dokumen di kantor BPJS terdekat dalam 14 hari."
-}
-```
-
 ### USSD Response Format
 
 - `CON <message>` - Continue session (memerlukan input user)
@@ -279,28 +328,132 @@ Response:
 
 Input user dipisahkan dengan asterisk (*). Contoh: `1*3201234567890001` berarti pilih menu 1, input NIK 3201234567890001.
 
+### Swagger Documentation
+
+Dokumentasi interaktif tersedia di: `http://localhost:3000/api/docs`
+
 ---
 
-## Development Tools
+## Development Guide
 
-### Prisma Studio
+### Automation Scripts
 
-GUI untuk viewing dan editing database:
+Skrip untuk memudahkan development dengan auto-detect IP dan setup otomatis:
+
+**Linux/Mac:**
+```bash
+./start-dev.sh
+```
+
+**Windows:**
+```powershell
+.\start-dev.ps1
+```
+
+**Fitur skrip:**
+- Auto-detect IP lokal
+- Update konfigurasi mobile otomatis
+- Install dependencies jika belum ada
+- Setup database Prisma otomatis
+- Jalankan backend + mobile sekaligus
+- Restore konfigurasi saat exit (Ctrl+C)
+
+### Manual Development
+
+#### Backend Only
+
+```bash
+cd backend
+npm run dev
+```
+
+Backend akan berjalan di `http://localhost:3000`
+
+#### Mobile Only
+
+```bash
+cd mobile
+npm start
+```
+
+**Catatan:** Pastikan `mobile/config.js` sudah diupdate dengan IP backend yang benar.
+
+### Testing
+
+#### API Testing dengan cURL
+
+**Health Check:**
+```bash
+curl http://localhost:3000/health
+```
+
+**USSD Main Menu:**
+```bash
+curl -X POST http://localhost:3000/api/ussd \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sessionId": "test_001",
+    "serviceCode": "*354#",
+    "phoneNumber": "081234567890",
+    "text": ""
+  }'
+```
+
+**Info Kepesertaan:**
+```bash
+curl -X POST http://localhost:3000/api/ussd \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sessionId": "test_002",
+    "serviceCode": "*354#",
+    "phoneNumber": "081234567890",
+    "text": "1*3201234567890001"
+  }'
+```
+
+#### Testing dari Smartphone
+
+1. Pastikan backend running
+2. Buka browser smartphone, akses: `http://YOUR_IP:3000/health`
+3. Jika sukses, buka Expo Go app
+4. Scan QR code
+5. Ketik `*354#` dan tekan CALL
+
+### Database Management
+
+#### Prisma Studio
+
+GUI untuk view dan edit database:
 
 ```bash
 cd backend
 npm run prisma:studio
 ```
 
-Akses di `http://localhost:5555`
+Akses: `http://localhost:5555`
 
-### Swagger API Documentation
+#### Reset Database
 
-Dokumentasi interaktif untuk testing API:
+```bash
+cd backend
+rm prisma/dev.db
+npx prisma migrate dev --name init
+npm run prisma:seed
+```
 
-Akses di `http://localhost:3000/api/docs`
+#### Add New Migration
+
+```bash
+cd backend
+npx prisma migrate dev --name your_migration_name
+```
 
 ### Available Scripts
+
+**Root Directory:**
+- `./start-dev.sh` (Linux/Mac) - Start development environment
+- `.\start-dev.ps1` (Windows) - Start development environment
+- `./test-setup.sh` - Test environment setup
 
 **Backend:**
 - `npm start` - Run production server
@@ -320,16 +473,74 @@ Akses di `http://localhost:3000/api/docs`
 
 ## Troubleshooting
 
+### Automation Script Issues
+
+**Masalah:** Skrip automasi gagal mendeteksi IP.
+
+**Solusi:**
+1. Pastikan komputer terhubung ke jaringan WiFi/LAN
+2. Jalankan manual setup dan cek IP dengan `ipconfig` (Windows) atau `hostname -I` (Linux/Mac)
+3. Edit `mobile/config.js` secara manual jika perlu
+
+**Masalah (Windows):** Script execution policy error.
+
+**Solusi:**
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+**Masalah (Linux/Mac):** Permission denied.
+
+**Solusi:**
+```bash
+chmod +x start-dev.sh
+./start-dev.sh
+```
+
 ### Cannot Connect to Server
 
 **Masalah:** Mobile app tidak dapat terhubung ke backend.
 
 **Solusi:**
-1. Pastikan backend running dengan `npm run dev`
+1. Pastikan backend running dengan `npm run dev` atau gunakan `./start-dev.sh`
 2. Verifikasi IP address di `mobile/config.js` sudah benar
-3. Test endpoint dari browser smartphone: `http://192.168.1.100:3000/health`
+3. Test endpoint dari browser smartphone: `http://YOUR_IP:3000/health`
 4. Pastikan komputer dan smartphone di WiFi yang sama
 5. Matikan firewall yang memblokir port 3000
+
+**Windows Firewall:**
+```powershell
+New-NetFirewallRule -DisplayName "Node.js" -Direction Inbound -Program "C:\Program Files\nodejs\node.exe" -Action Allow
+```
+
+**Linux Firewall (ufw):**
+```bash
+sudo ufw allow 3000/tcp
+sudo ufw allow 8081/tcp
+```
+
+**Mac:**
+System Preferences > Security & Privacy > Firewall > Firewall Options > Allow Node.js
+
+### Port Already in Use
+
+**Backend (Port 3000):**
+```bash
+# Linux/Mac
+lsof -ti:3000 | xargs kill -9
+
+# Windows PowerShell
+Get-Process -Id (Get-NetTCPConnection -LocalPort 3000).OwningProcess | Stop-Process
+```
+
+**Expo (Port 8081):**
+```bash
+# Linux/Mac
+lsof -ti:8081 | xargs kill -9
+
+# Windows PowerShell
+Get-Process -Id (Get-NetTCPConnection -LocalPort 8081).OwningProcess | Stop-Process
+```
 
 ### Prisma Database Error
 
@@ -365,6 +576,76 @@ npx expo start --clear
 3. Verifikasi network request berhasil ke backend
 4. Test dengan curl untuk memastikan backend response correct
 
+### IP Detection Fails
+
+Jika skrip automasi gagal detect IP:
+
+1. **Manual Check IP:**
+   ```bash
+   # Linux/Mac
+   hostname -I
+   
+   # Windows
+   ipconfig
+   ```
+
+2. **Manual Update Config:**
+   Edit `mobile/config.js`:
+   ```javascript
+   const API_BASE_URL = 'http://YOUR_IP_HERE:3000';
+   ```
+
+### Clear Metro Cache (Mobile)
+
+```bash
+cd mobile
+npx expo start --clear
+```
+
+### Reinstall Dependencies
+
+**Backend:**
+```bash
+cd backend
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Mobile:**
+```bash
+cd mobile
+rm -rf node_modules package-lock.json
+npm install
+```
+
+---
+
+## Performance Tips
+
+### Backend
+
+- Use `NODE_ENV=production` untuk production builds
+- Enable compression (sudah aktif)
+- Monitor logs di `backend/logs/`
+
+### Mobile
+
+- Clear Metro cache jika app lambat: `npx expo start --clear`
+- Gunakan `npm run web` untuk debug di browser
+- Check network tab di Expo DevTools
+
+---
+
+## Best Practices
+
+1. **Always use automation scripts** untuk development
+2. **Never commit** `mobile/config.js.backup` atau `.env` files
+3. **Test API endpoints** dengan cURL sebelum test di mobile
+4. **Use Prisma Studio** untuk debug database issues
+5. **Check Swagger docs** di `http://localhost:3000/api/docs`
+6. **Monitor logs** di `backend/logs/` untuk troubleshooting
+7. **Keep phone and computer** on same WiFi network
+
 ---
 
 ## License
@@ -380,4 +661,3 @@ For licensing inquiries, contact:
 - Developer: Global Palvion Development Team
 
 See the LICENSE file for complete terms and conditions.
- 

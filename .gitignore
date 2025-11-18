@@ -119,9 +119,11 @@ build/
 # Backup & Temporary Files
 # ===========================
 *.bak
+*.backup
 *.tmp
 *.temp
 *~
 .*.swp
+config.js.backup
 # Application logs
 logs/
