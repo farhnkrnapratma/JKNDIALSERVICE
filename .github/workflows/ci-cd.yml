@@ -137,17 +137,17 @@ jobs:
           tag_name: ${{ github.ref }}
           name: Release v${{ steps.version.outputs.version }}
           body: |
-            Release v${{ steps.version.outputs.version }}
+            ## Release v${{ steps.version.outputs.version }}
 
             Changelog:
             ${{ steps.release_notes.outputs.commit_log }}
 
             Installation:
-            1. Install dependencies: npm install in mobile/ directory
-            2. Run the app: npm start
+            1. Install dependencies: `npm install` in **mobile/** directory
+            2. Run the app: `npm start`
 
             Documentation:
-            See README.md for setup and usage instructions.
+            See `README.md` for setup and usage instructions.
           draft: false
           prerelease: false
         env:
