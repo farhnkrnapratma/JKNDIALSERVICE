@@ -221,12 +221,11 @@ const styles = StyleSheet.create({
   okButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '700',
     fontFamily: Platform.select({
       ios: 'System',
       android: 'Roboto'
-    }),
-    fontWeight: 'bold'
+    })
   }
 });
 

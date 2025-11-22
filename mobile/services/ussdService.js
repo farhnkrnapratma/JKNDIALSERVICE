@@ -1,5 +1,4 @@
-import axios from 'axios';
-import { API_CONFIG } from '../config';
+import ussdEngine from './ussdEngine';
 
 export const generateSessionId = () => {
   return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -7,33 +6,14 @@ export const generateSessionId = () => {
 
 export const sendUssdRequest = async (sessionId, text, phoneNumber = '', serviceCode = '*354#') => {
   try {
-    const response = await axios.post(
-      API_CONFIG.USSD_ENDPOINT,
-      {
-        sessionId,
-        serviceCode,
-        phoneNumber,
-        text
-      },
-      {
-        timeout: API_CONFIG.TIMEOUT,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    const response = ussdEngine.processRequest(text, phoneNumber);
 
-    return response.data;
+    return {
+      sessionId,
+      response
+    };
   } catch (error) {
-    if (error.code === 'ECONNABORTED') {
-      throw new Error('Request timeout. Periksa koneksi internet.');
-    } else if (error.response) {
-      throw new Error(error.response.data.message || 'Server error');
-    } else if (error.request) {
-      throw new Error('Tidak dapat terhubung ke server. Pastikan backend berjalan dan IP sudah benar.');
-    } else {
-      throw new Error(error.message || 'Terjadi kesalahan');
-    }
+    throw new Error(error.message || 'Terjadi kesalahan sistem');
   }
 };
 

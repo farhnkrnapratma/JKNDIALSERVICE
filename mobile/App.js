@@ -84,10 +84,7 @@ export default function App() {
     } catch (error) {
       setLoading(false);
       setPopupVisible(false);
-      Alert.alert(
-        'Connection Error',
-        error.message + '\n\nPastikan:\n1. Backend sudah running\n2. IP di config.js sudah benar\n3. Terhubung ke WiFi yang sama'
-      );
+      Alert.alert('Error', error.message);
     }
   };
 
@@ -131,9 +128,6 @@ export default function App() {
 
       <View style={styles.header}>
         <Text style={styles.headerTitle}>JKN Dial Service Prototype</Text>
-        <Text style={styles.headerSubtitle}>
-          Bukan USSD Operator Sesungguhnya
-        </Text>
       </View>
 
       <View style={styles.displayContainer}>
@@ -185,12 +179,6 @@ const styles = StyleSheet.create({
       ios: 'System',
       android: 'Roboto'
     })
-  },
-  headerSubtitle: {
-    fontSize: 12,
-    color: '#e0f2f1',
-    textAlign: 'center',
-    fontWeight: '400'
   },
   displayContainer: {
     paddingHorizontal: 20,

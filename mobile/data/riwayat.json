@@ -1,0 +1,30 @@
+[
+  {
+    "nik": "3201234567890001",
+    "tanggal": "2025-01-10",
+    "jenis": "FKTP",
+    "detail": "Pemeriksaan kesehatan umum",
+    "faskes": "Puskesmas Cibinong"
+  },
+  {
+    "nik": "3201234567890001",
+    "tanggal": "2024-12-15",
+    "jenis": "Rujukan",
+    "detail": "Rujukan ke RS untuk pemeriksaan lanjutan",
+    "faskes": "RS PMI Bogor"
+  },
+  {
+    "nik": "3201234567890002",
+    "tanggal": "2025-01-05",
+    "jenis": "FKTP",
+    "detail": "Kontrol rutin hipertensi",
+    "faskes": "Puskesmas Ciawi"
+  },
+  {
+    "nik": "1671122812030001",
+    "tanggal": "2025-01-12",
+    "jenis": "FKTP",
+    "detail": "Pemeriksaan kesehatan umum",
+    "faskes": "Klinik Opina"
+  }
+]

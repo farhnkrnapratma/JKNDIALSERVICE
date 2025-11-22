@@ -6,15 +6,18 @@
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "icon": "./assets/icon.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jkn.dialservice"
+      "bundleIdentifier": "com.jkn.dialservice",
+      "icon": "./assets/icon.png"
     },
     "android": {
-      "package": "com.jkn.dialservice"
+      "package": "com.jkn.dialservice",
+      "icon": "./assets/icon.png"
     }
   }
 }

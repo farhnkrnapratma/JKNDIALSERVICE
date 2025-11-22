@@ -1,0 +1,46 @@
+[
+  {
+    "nik": "3201234567890001",
+    "nama": "Budi Santoso",
+    "status": "Aktif",
+    "kelas": "Kelas III",
+    "fktp": "Puskesmas Cibinong",
+    "noHP": "081234567890",
+    "email": "budi@example.com",
+    "alamat": "Jl. Merdeka No. 123, Bogor",
+    "noKK": "3201012345678901"
+  },
+  {
+    "nik": "3201234567890002",
+    "nama": "Siti Aminah",
+    "status": "Aktif",
+    "kelas": "Kelas II",
+    "fktp": "Puskesmas Ciawi",
+    "noHP": "081234567891",
+    "email": "siti@example.com",
+    "alamat": "Jl. Raya Ciawi No. 45, Bogor",
+    "noKK": "3201012345678902"
+  },
+  {
+    "nik": "3201234567890003",
+    "nama": "Ahmad Hidayat",
+    "status": "NonAktif",
+    "kelas": "Kelas III",
+    "fktp": "Puskesmas Cibinong",
+    "noHP": "081234567892",
+    "email": "",
+    "alamat": "Jl. Kenanga No. 78, Bogor",
+    "noKK": "3201012345678903"
+  },
+  {
+    "nik": "1671122812030001",
+    "nama": "Zain Ahmad Fahrezi",
+    "status": "Aktif",
+    "kelas": "Kelas II",
+    "fktp": "Klinik Opina",
+    "noHP": "089604332830",
+    "email": "zainahmadfahrezi@gmail.com",
+    "alamat": "JL. PSI Kenayan, Lr. Gumarang",
+    "noKK": "1671121612140002"
+  }
+]

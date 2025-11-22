@@ -1,0 +1,62 @@
+[
+  {
+    "kode": "PKM-BGR-001",
+    "nama": "Puskesmas Cibinong",
+    "jenis": "FKTP",
+    "kabupaten": "Bogor",
+    "kecamatan": "Cibinong",
+    "alamat": "Jl. Tegar Beriman No. 1",
+    "telp": "021-87654321",
+    "kuotaHari": 50
+  },
+  {
+    "kode": "PKM-BGR-002",
+    "nama": "Puskesmas Ciawi",
+    "jenis": "FKTP",
+    "kabupaten": "Bogor",
+    "kecamatan": "Ciawi",
+    "alamat": "Jl. Raya Ciawi No. 100",
+    "telp": "0251-123456",
+    "kuotaHari": 40
+  },
+  {
+    "kode": "RS-BGR-001",
+    "nama": "RS PMI Bogor",
+    "jenis": "RS",
+    "kabupaten": "Bogor",
+    "kecamatan": "Bogor Tengah",
+    "alamat": "Jl. Raya Pajajaran No. 80",
+    "telp": "0251-321321",
+    "kuotaHari": 200
+  },
+  {
+    "kode": "RS-BGR-002",
+    "nama": "RSUD Kota Bogor",
+    "jenis": "RS",
+    "kabupaten": "Bogor",
+    "kecamatan": "Bogor Tengah",
+    "alamat": "Jl. Ir. H. Juanda No. 10",
+    "telp": "0251-654321",
+    "kuotaHari": 300
+  },
+  {
+    "kode": "KLN-BGR-001",
+    "nama": "Klinik Pratama Sehat",
+    "jenis": "Klinik",
+    "kabupaten": "Bogor",
+    "kecamatan": "Cibinong",
+    "alamat": "Jl. Mayor Oking No. 20",
+    "telp": "0251-789789",
+    "kuotaHari": 30
+  },
+  {
+    "kode": "KLN-OPI-001",
+    "nama": "Klinik Opina",
+    "jenis": "Klinik",
+    "kabupaten": "Palembang",
+    "kecamatan": "Ilir Timur II",
+    "alamat": "Jl. PSI Kenayan, Lr. Gumarang",
+    "telp": "0711-555123",
+    "kuotaHari": 35
+  }
+]
